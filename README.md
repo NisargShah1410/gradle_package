@@ -1,15 +1,51 @@
-# simple-java-maven-app
+[![CI](https://github.com/tkgregory/spring-boot-api-example/actions/workflows/gradle.yml/badge.svg)](https://github.com/tkgregory/spring-boot-api-example/actions/workflows/gradle.yml)
 
-This repository is for the
-[Build a Java app with Maven](https://jenkins.io/doc/tutorials/build-a-java-app-with-maven/)
-tutorial in the [Jenkins User Documentation](https://jenkins.io/doc/).
+## Overview
 
-The repository contains a simple Java application which outputs the string
-"Hello world!" and is accompanied by a couple of unit tests to check that the
-main application works as expected. The results of these tests are saved to a
-JUnit XML report.
+An example project to demonstrate:
 
-The `jenkins` directory contains an example of the `Jenkinsfile` (i.e. Pipeline)
-you'll be creating yourself during the tutorial and the `scripts` subdirectory
-contains a shell script with commands that are executed when Jenkins processes
-the "Deliver" stage of your Pipeline.
+* how to create a Spring Boot REST API ([article](https://tomgregory.com/building-a-spring-boot-application-in-jenkins/) | [video](https://youtu.be/sCcuUMn1vdM))
+* how to run Spring Boot in Docker and publish to Docker Hub ([article](https://tomgregory.com/building-a-spring-boot-application-in-docker-and-jenkins/) | [video](https://youtu.be/Kc3Vw5vk1Lw))
+* how to deploy the Spring Boot application to AWS with CloudFormation ([article](https://tomgregory.com/deploying-a-spring-boot-application-into-aws-with-jenkins/) | [video](https://youtu.be/5xh0nAYeZNc))
+
+## Pre-requisites
+
+* JDK 8+
+* Docker
+
+## Building
+
+### Testing
+
+`./gradlew test`
+
+### Building (no tests)
+
+`./gradlew assemble`
+
+### Building (with tests)
+
+`./gradlew build`
+
+### Running in Docker
+
+`./gradlew assemble docker dockerRun`
+
+### Stopping Docker container
+
+`./gradlew dockerStop`
+
+### Deploying to AWS
+
+`./gradlew awsCfnMigrateStack awsCfnWaitStackComplete -PsubnetId=<your-subnet-id> -Pregion=<your-region>`
+
+### Deleting AWS deployment
+
+`./gradlew awsCfnDeleteStack awsCfnWaitStackComplete`
+
+## Using API
+
+* get all rides - GET [/ride](http://localhost:8080/ride) to get a list of all the rides
+* get specific ride - GET [/ride/${id}](http://localhost:8080/ride/1) to get a specific ride
+* create ride - POST JSON to [/ride](http://localhost:8080/ride) to create a new ride 
+(see [article](https://tomgregory.com/building-a-spring-boot-application-in-jenkins/#2_Trying_out_our_Spring_Boot_application) for full details)
